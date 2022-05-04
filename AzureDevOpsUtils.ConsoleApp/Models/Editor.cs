@@ -2,5 +2,5 @@
 
 public class Editor
 {
-    public string href { get; set; }
+    public string Href { get; set; }
 }

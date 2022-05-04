@@ -2,6 +2,6 @@
 
 public class Process
 {
-    public string yamlFilename { get; set; }
-    public int type { get; set; }
+    public string YamlFilename { get; set; }
+    public int Type { get; set; }
 }

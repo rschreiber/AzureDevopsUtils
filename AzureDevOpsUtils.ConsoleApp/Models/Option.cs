@@ -2,7 +2,7 @@
 
 public class Option
 {
-    public bool enabled { get; set; }
-    public Definition definition { get; set; }
-    public Inputs inputs { get; set; }
+    public bool Enabled { get; set; }
+    public Definition Definition { get; set; }
+    public Inputs Inputs { get; set; }
 }

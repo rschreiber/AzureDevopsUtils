@@ -15,7 +15,6 @@ internal class PipelineCommandClass
 
     public void GeneratePipelineStatus(string outFileName)
     {
-
         var adf = new AzureDevOpsFacade(_organization, _project, _pat);
         var pipelines = adf.GetAllPipelines();
         List<string> fileLines = new List<string>
@@ -28,10 +27,11 @@ internal class PipelineCommandClass
             Console.Out.WriteLine($"Getting pipeline information for [{pipeline.Id}] {pipeline.Name}...");
             var buildDefinition = adf.GetBuildDefinition(pipeline.Id);
 
-            fileLines.Add($"|{buildDefinition.name}|[![Build Status]({buildDefinition._links.badge.href})]({buildDefinition._links.badge.href})|--|");
+            fileLines.Add($"|[{buildDefinition.Name}]({buildDefinition.Links.Web.Href})|[![Build Status]({buildDefinition.Links.Badge.Href})]({buildDefinition.Links.Badge.Href})|--|");
         }
         Console.Out.WriteLine($"Writing output to {outFileName}...");
         File.WriteAllLines(outFileName, fileLines);
         Console.Out.WriteLine("Complete.");
     }
+
 }

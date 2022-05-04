@@ -2,28 +2,28 @@
 
 public class BuildDefinition
 {
-    public Option[] options { get; set; }
-    public Trigger[] triggers { get; set; }
-    public Properties properties { get; set; }
-    public object[] tags { get; set; }
-    public _Links _links { get; set; }
-    public string jobAuthorizationScope { get; set; }
-    public int jobTimeoutInMinutes { get; set; }
-    public int jobCancelTimeoutInMinutes { get; set; }
-    public Process process { get; set; }
-    public Repository repository { get; set; }
-    public string quality { get; set; }
-    public Authoredby authoredBy { get; set; }
-    public object[] drafts { get; set; }
-    public Queue queue { get; set; }
-    public int id { get; set; }
-    public string name { get; set; }
-    public string url { get; set; }
-    public string uri { get; set; }
-    public string path { get; set; }
-    public string type { get; set; }
-    public string queueStatus { get; set; }
-    public int revision { get; set; }
-    public DateTime createdDate { get; set; }
-    public Project project { get; set; }
+    public Option[] Options { get; set; }
+    public Trigger[] Triggers { get; set; }
+    public Properties Properties { get; set; }
+    public object[] Tags { get; set; }
+    public Links Links { get; set; }
+    public string JobAuthorizationScope { get; set; }
+    public int JobTimeoutInMinutes { get; set; }
+    public int JobCancelTimeoutInMinutes { get; set; }
+    public Process Process { get; set; }
+    public Repository Repository { get; set; }
+    public string Quality { get; set; }
+    public Authoredby AuthoredBy { get; set; }
+    public object[] Drafts { get; set; }
+    public Queue Queue { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+    public string Uri { get; set; }
+    public string Path { get; set; }
+    public string Type { get; set; }
+    public string QueueStatus { get; set; }
+    public int Revision { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public Project Project { get; set; }
 }

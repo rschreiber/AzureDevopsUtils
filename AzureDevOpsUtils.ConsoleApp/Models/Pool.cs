@@ -2,7 +2,7 @@
 
 public class Pool
 {
-    public int id { get; set; }
-    public string name { get; set; }
-    public bool isHosted { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public bool IsHosted { get; set; }
 }

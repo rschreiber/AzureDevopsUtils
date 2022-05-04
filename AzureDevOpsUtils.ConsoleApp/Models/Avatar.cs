@@ -1,6 +1,6 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Avatar
+public partial class Avatar
 {
-    public string href { get; set; }
+    public string Href { get; set; }
 }

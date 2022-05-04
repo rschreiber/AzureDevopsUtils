@@ -2,8 +2,8 @@
 
 public class Inputs
 {
-    public string branchFilters { get; set; }
-    public string additionalFields { get; set; }
-    public string workItemType { get; set; }
-    public string assignToRequestor { get; set; }
+    public string BranchFilters { get; set; }
+    public string AdditionalFields { get; set; }
+    public string WorkItemType { get; set; }
+    public string AssignToRequestor { get; set; }
 }

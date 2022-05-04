@@ -17,12 +17,11 @@ internal class Program
 
         var outputFileOption = new Option<string>("--out", "The output file") {IsRequired = true};
 
-
+        #region Pipeline commands
         var pipelineCommand = new Command("pipeline");
 
         var pipelineGenerateCommand = new Command("generate")
         {
-
             organisationOption,
             projectOption,
             personalAccessTokenOption,
@@ -30,10 +29,27 @@ internal class Program
         };
 
         pipelineCommand.AddCommand(pipelineGenerateCommand);
+        #endregion
 
+        #region Accelerate Metric commands
+
+        var accelerateCommand = new Command("accelerate");
+        var accelerateTimeFromCommitCommand = new Command("timefromcommit")
+        {
+            organisationOption,
+            projectOption,
+            personalAccessTokenOption,
+            outputFileOption
+        };
+        accelerateCommand.AddCommand(accelerateTimeFromCommitCommand);
+
+        #endregion
         var rootCommand = new RootCommand
         {
-            pipelineCommand
+
+            pipelineCommand,
+            accelerateCommand,
+
         };
 
         pipelineGenerateCommand.SetHandler(
@@ -43,11 +59,22 @@ internal class Program
             },
             organisationOption, projectOption, personalAccessTokenOption, outputFileOption);
 
+        accelerateTimeFromCommitCommand.SetHandler(
+            (string organisation, string project, string pat, string outputFileName) =>
+            {
+                HandlePullRequestList(organisation, project, pat, outputFileName);
+            },
+            organisationOption, projectOption, personalAccessTokenOption, outputFileOption);
         return rootCommand.Invoke(args);
     }
 
     static void HandlePipelineGenerate(string org, string proj, string pat, string outputFileName)
     {
         new PipelineCommandClass(org, proj, pat).GeneratePipelineStatus(outputFileName);
+    }
+
+    static void HandlePullRequestList(string org, string proj, string pat, string outputFileName)
+    {
+        new AccelerateMetricCommandClass(org, proj, pat).GetTimeToDeployForPipelineRun(296, 82728);
     }
 }

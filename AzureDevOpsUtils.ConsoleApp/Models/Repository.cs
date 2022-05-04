@@ -1,13 +1,15 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Repository
+public partial class Repository
 {
-    public Properties1 properties { get; set; }
-    public string id { get; set; }
-    public string type { get; set; }
-    public string name { get; set; }
-    public string url { get; set; }
-    public string defaultBranch { get; set; }
-    public object clean { get; set; }
-    public bool checkoutSubmodules { get; set; }
+    public Project Project { get; set; }
+    public bool IsFork { get; set; }
+    public Properties Properties { get; set; }
+    public string Id { get; set; }
+    public string Type { get; set; }
+    public string Name { get; set; }
+    public string Url { get; set; }
+    public string DefaultBranch { get; set; }
+    public object Clean { get; set; }
+    public bool CheckoutSubmodules { get; set; }
 }
