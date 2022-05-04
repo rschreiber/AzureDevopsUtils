@@ -13,6 +13,7 @@ internal class AccelerateMetricCommandClass
         _pat = pat;
     }
 
+    //TODO: Parameterise
     public TimeSpan GetTimeToDeployForPipelineRun(int pipelineId, int runId)
     {
         var adf = new AzureDevOpsFacade(_organization, _project, _pat);
