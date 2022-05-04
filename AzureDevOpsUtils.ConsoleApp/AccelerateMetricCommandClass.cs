@@ -18,8 +18,24 @@ internal class AccelerateMetricCommandClass
     {
         var adf = new AzureDevOpsFacade(_organization, _project, _pat);
         var pipelineRunInfo = adf.GetPipelineRunInformation(pipelineId, runId);
-        var pullRequestId = adf.GetPullRequestIdArrayForCommit(new Guid("c4ea4f5b-ce53-4b6a-87ae-32baf62d6d9b"),
-            "9285b32264904ab79fafb3ea3d2365ae86396e6c");
-        return new TimeSpan(1,1,1,1);
+        var pipelineDateTime = pipelineRunInfo.CreatedDate;
+        if (pipelineRunInfo.FinishedDate != DateTime.MinValue)
+        {
+            pipelineDateTime = pipelineRunInfo.FinishedDate;
+        }
+
+        var commitId = pipelineRunInfo.Resources.Repositories.Self.version;
+        var repositoryId = pipelineRunInfo.Resources.Repositories.Self.repository.Id;
+        var pullRequestId = adf.GetPullRequestIdArrayForCommit(new Guid(repositoryId),
+            commitId);
+        var pullRequestInfo = adf.GetPullRequestInfo(pullRequestId[0]);
+        var prCreatedDateTime = pullRequestInfo.CreationDate;
+        var timeTaken = pipelineDateTime - prCreatedDateTime;
+        Console.WriteLine($"Pipeline Run Name  : {pipelineRunInfo.Name}");
+        Console.WriteLine($"Completed          : {pipelineDateTime.ToLocalTime():yyyy/MM/dd HH:mm}");
+        Console.WriteLine($"Commit             : {commitId}");
+        Console.WriteLine($"PR Created         : {prCreatedDateTime.ToLocalTime():yyyy/MM/dd HH:mm}");
+        Console.WriteLine($"Elapsed            : {timeTaken}");
+        return timeTaken;
     }
-}
+} 

@@ -100,6 +100,24 @@ internal class AzureDevOpsFacade
         return new[] {1};
     }
 
+
+    public PullRequest GetPullRequestInfo(int pullRequestId)
+    {
+
+        var request = CreateRestRequest($"git/pullrequests/{pullRequestId}?api-version=7.1-preview.1", Method.Get);
+        if (RestClient != null)
+        {
+            var response = RestClient.Execute<PullRequest>(request);
+            if (response.IsSuccessful && response.Data != null)
+            {
+                return response.Data;
+            }
+        }
+
+        return new();
+
+    }
+
     private RestClient? GetJsonClient(string organization, string project, string pat)
     {
         var rootUrl = $"https://dev.azure.com/{organization}/{project}/_apis/";

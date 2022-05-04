@@ -51,5 +51,5 @@ public class Resources
 
 public class Repositories
 {
-    public Self Self { get; set; }
+    public RepositorySelf Self { get; set; }
 }
