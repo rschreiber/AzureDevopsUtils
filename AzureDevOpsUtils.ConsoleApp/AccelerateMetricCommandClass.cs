@@ -13,11 +13,13 @@ internal class AccelerateMetricCommandClass
         _pat = pat;
     }
 
-    //TODO: Parameterise
-    public TimeSpan GetTimeToDeployForPipelineRun(int pipelineId, int runId)
+
+    //TODO: RS - Decided where to write the output
+    public TimeSpan GetTimeToDeployForPipelineRun(int? pipelineId, int? runId)
     {
+
         var adf = new AzureDevOpsFacade(_organization, _project, _pat);
-        var pipelineRunInfo = adf.GetPipelineRunInformation(pipelineId, runId);
+        var pipelineRunInfo = adf.GetPipelineRunInformation(pipelineId.Value, runId.Value);
         var pipelineDateTime = pipelineRunInfo.CreatedDate;
         if (pipelineRunInfo.FinishedDate != DateTime.MinValue)
         {

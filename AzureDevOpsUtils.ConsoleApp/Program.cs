@@ -15,6 +15,9 @@ internal class Program
             new Option<string>("--pat", "The personal access token to connect to DevOps with")
                 {IsRequired = true};
 
+        var pipelineIdOption = new Option<int>("--pipeline", "The id of the pipeline to check on") { IsRequired = true };
+        var pipelineRunIdOption = new Option<int>("--pipelinerun", "The id of the pipeline run to check on") { IsRequired = true };
+
         var outputFileOption = new Option<string>("--out", "The output file") {IsRequired = true};
 
         #region Pipeline commands
@@ -39,7 +42,8 @@ internal class Program
             organisationOption,
             projectOption,
             personalAccessTokenOption,
-            outputFileOption
+            pipelineIdOption,
+            pipelineRunIdOption
         };
         accelerateCommand.AddCommand(accelerateTimeFromCommitCommand);
 
@@ -60,11 +64,11 @@ internal class Program
             organisationOption, projectOption, personalAccessTokenOption, outputFileOption);
 
         accelerateTimeFromCommitCommand.SetHandler(
-            (string organisation, string project, string pat, string outputFileName) =>
+            (string organisation, string project, string pat, int pipelineId, int pipelineRunId) =>
             {
-                HandlePullRequestList(organisation, project, pat, outputFileName);
+                HandleAccelerateTimeFromCommit(organisation, project, pat, pipelineId, pipelineRunId);
             },
-            organisationOption, projectOption, personalAccessTokenOption, outputFileOption);
+            organisationOption, projectOption, personalAccessTokenOption, pipelineIdOption, pipelineRunIdOption);
         return rootCommand.Invoke(args);
     }
 
@@ -73,8 +77,8 @@ internal class Program
         new PipelineCommandClass(org, proj, pat).GeneratePipelineStatus(outputFileName);
     }
 
-    static void HandlePullRequestList(string org, string proj, string pat, string outputFileName)
+    static void HandleAccelerateTimeFromCommit(string org, string proj, string pat, int pipelineId, int pipelineRunId)
     {
-        new AccelerateMetricCommandClass(org, proj, pat).GetTimeToDeployForPipelineRun(296, 82728);
+        new AccelerateMetricCommandClass(org, proj, pat).GetTimeToDeployForPipelineRun(pipelineId, pipelineRunId);
     }
 }
