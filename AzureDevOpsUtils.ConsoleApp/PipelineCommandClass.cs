@@ -5,17 +5,18 @@ internal class PipelineCommandClass
     private readonly string _organization;
     private readonly string _project;
     private readonly string _pat;
-
-    public PipelineCommandClass(string organization, string project, string pat)
+    private readonly bool _verbose;
+    public PipelineCommandClass(string organization, string project, string pat, bool verbose)
     {
         _organization = organization;
         _project = project;
         _pat = pat;
+        _verbose = verbose;
     }
 
     public void GeneratePipelineStatus(string outFileName)
     {
-        var adf = new AzureDevOpsFacade(_organization, _project, _pat);
+        var adf = new AzureDevOpsFacade(_organization, _project, _pat, _verbose);
         var pipelines = adf.GetAllPipelines();
         List<string> fileLines = new List<string>
         {
