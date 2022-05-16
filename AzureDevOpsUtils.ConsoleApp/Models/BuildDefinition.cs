@@ -13,7 +13,7 @@ public class BuildDefinition
     public Process Process { get; set; }
     public Repository Repository { get; set; }
     public string Quality { get; set; }
-    public Authoredby AuthoredBy { get; set; }
+    public AuthoredBy AuthoredBy { get; set; }
     public object[] Drafts { get; set; }
     public Queue Queue { get; set; }
     public int Id { get; set; }

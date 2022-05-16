@@ -2,10 +2,10 @@
 
 public partial class Links
 {
-    public Avatar Avatar { get; set; }
+    public WebLink Avatar { get; set; }
 
-    public Self Self { get; set; }
-    public Web Web { get; set; }
-    public Editor Editor { get; set; }
-    public Badge Badge { get; set; }
+    public WebLink Self { get; set; }
+    public WebLink Web { get; set; }
+    public WebLink Editor { get; set; }
+    public WebLink Badge { get; set; }
 }

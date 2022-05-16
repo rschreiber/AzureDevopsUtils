@@ -1,6 +1,6 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Autocompletesetby
+public class AutoCompleteSetBy
 {
     public string DisplayName { get; set; }
     public string Url { get; set; }

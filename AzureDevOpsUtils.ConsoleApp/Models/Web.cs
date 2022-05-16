@@ -1,9 +1,5 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Web
-{
-    public string Href { get; set; }
-}
 
 
 
@@ -23,17 +19,14 @@ public class PipelineRunInformationResponse
 
 public class PipelineLinks
 {
-    public Self Self { get; set; }
-    public Web Web { get; set; }
-    public PipelineWebLink Pipelineweb { get; set; }
+    public WebLink Self { get; set; }
+    public WebLink Web { get; set; }
+    public WebLink Pipelineweb { get; set; }
     public Pipeline Pipeline { get; set; }
 }
 
 
-public class PipelineWebLink
-{
-    public string Href { get; set; }
-}
+
 
 public class Pipeline1
 {

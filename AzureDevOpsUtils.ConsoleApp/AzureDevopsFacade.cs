@@ -8,22 +8,18 @@ namespace AzureDevOpsUtils.ConsoleApp;
 
 internal class AzureDevOpsFacade
 {
-    private readonly string _organization;
-    private readonly string _project;
-    private readonly string _pat;
+    private readonly AzureDevOpsConfig _azureDevopsConfig;
     private readonly bool _verbose;
-    public AzureDevOpsFacade(string organization, string project, string pat, bool verbose)
+    public AzureDevOpsFacade(AzureDevOpsConfig config, bool verbose)
     {
-        _organization = organization;
-        _project = project;
-        _pat = pat;
+        _azureDevopsConfig = config;
         _verbose = verbose;
     }
 
     private RestClient? _adoRestClient;
     private RestClient? _vsoRestClient;
-    private RestClient? AzureDevopsRestClient => _adoRestClient ??= GetAzureDevopsJsonClient(_organization, _project, _pat);
-    private RestClient? VSORestClient => _vsoRestClient ??= GetVSOJsonClient(_organization, _project, _pat);
+    private RestClient? AzureDevopsRestClient => _adoRestClient ??= GetAzureDevopsJsonClient(_azureDevopsConfig);
+    private RestClient? VSORestClient => _vsoRestClient ??= GetVSOJsonClient(_azureDevopsConfig);
 
     public IEnumerable<Pipeline> GetAllPipelines()
     {
@@ -59,6 +55,21 @@ internal class AzureDevOpsFacade
         return new();
     }
 
+    public PipelineRunHistory GetPipelineRunHistory(int pipelineId)
+    {
+
+        var request = CreateRestRequest($"pipelines/{pipelineId}/runs/?api-version=7.1-preview.1", Method.Get);
+        if (AzureDevopsRestClient != null)
+        {
+            var response = AzureDevopsRestClient.Execute<PipelineRunHistory>(request);
+            if (response.IsSuccessful && response.Data != null)
+            {
+                return response.Data;
+            }
+        }
+
+        return new();
+    }
 
     public PipelineRunInformationResponse GetPipelineRunInformation(int pipelineId, int runId)
     {
@@ -136,17 +147,47 @@ internal class AzureDevOpsFacade
         return new();
     }
 
-
-    private RestClient? GetVSOJsonClient(string organization, string project, string pat)
+    public void GetTestRunInfo(int? testRunId)
     {
-        var rootUrl = $"https://{organization}.vstmr.visualstudio.com/{project}/_apis/";
-        return GetJsonClient(rootUrl, pat);
+        // https://dev.azure.com/henryscheinone/conversions/_apis/
+        var request = CreateRestRequest($"test/runs/{testRunId}/Statistics?api-version=6.0", Method.Get);
+        if (AzureDevopsRestClient != null)
+        {
+            var response = AzureDevopsRestClient.Execute(request);
+            if (response.IsSuccessful && response.Content != null)
+            {
+                return;// response.Data;
+            }
+        }
+
+        return;// new();
     }
 
-    private RestClient? GetAzureDevopsJsonClient(string organization, string project, string pat)
+    public PipelineTimeline GetTimeLineByPipelineRunId(int? runId)
     {
-        var rootUrl = $"https://dev.azure.com/{organization}/{project}/_apis/";
-        return GetJsonClient(rootUrl, pat);
+        var request = CreateRestRequest($"/build/builds/{runId}/timeline/?api-version=7.1-preview.2", Method.Get);
+        if (AzureDevopsRestClient != null)
+        {
+            var response = AzureDevopsRestClient.Execute<PipelineTimeline>(request);
+            if (response.IsSuccessful && response.Data != null)
+            {
+                return response.Data;
+            }
+        }
+
+        return new();
+    }
+
+    private RestClient? GetVSOJsonClient(AzureDevOpsConfig config)
+    {
+        var rootUrl = $"https://{config.Organisation}.vstmr.visualstudio.com/{config.Project}/_apis/";
+        return GetJsonClient(rootUrl, config.PersonalAccessToken);
+    }
+
+    private RestClient? GetAzureDevopsJsonClient(AzureDevOpsConfig config)
+    {
+        var rootUrl = $"https://dev.azure.com/{config.Organisation}/{config.Project}/_apis/";
+        return GetJsonClient(rootUrl, config.PersonalAccessToken);
     }
 
     private RestClient? GetJsonClient(string rootUrl, string pat)

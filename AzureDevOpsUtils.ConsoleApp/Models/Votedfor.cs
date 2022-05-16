@@ -1,6 +1,6 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Votedfor
+public class VotedFor
 {
     public string ReviewerUrl { get; set; }
     public int Vote { get; set; }

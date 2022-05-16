@@ -1,5 +1,4 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
-
 public class Pool
 {
     public int Id { get; set; }

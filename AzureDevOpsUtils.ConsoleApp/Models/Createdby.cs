@@ -1,6 +1,6 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Createdby
+public class CreatedBy
 {
     public string DisplayName { get; set; }
     public string Url { get; set; }

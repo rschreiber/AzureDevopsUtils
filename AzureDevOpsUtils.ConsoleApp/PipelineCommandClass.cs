@@ -1,22 +1,22 @@
-﻿namespace AzureDevOpsUtils.ConsoleApp;
+﻿using Microsoft.ApplicationInsights;
+
+namespace AzureDevOpsUtils.ConsoleApp;
 
 internal class PipelineCommandClass
 {
-    private readonly string _organization;
-    private readonly string _project;
-    private readonly string _pat;
-    private readonly bool _verbose;
-    public PipelineCommandClass(string organization, string project, string pat, bool verbose)
+
+    private readonly TelemetryClient _telemetryClient;
+
+
+    public PipelineCommandClass(TelemetryClient telemetryClient)
     {
-        _organization = organization;
-        _project = project;
-        _pat = pat;
-        _verbose = verbose;
+        _telemetryClient = telemetryClient;
     }
 
-    public void GeneratePipelineStatus(string outFileName)
+
+    public void GeneratePipelineStatus(AzureDevOpsConfig config, string outFileName)
     {
-        var adf = new AzureDevOpsFacade(_organization, _project, _pat, _verbose);
+        var adf = new AzureDevOpsFacade(config, false);
         var pipelines = adf.GetAllPipelines();
         List<string> fileLines = new List<string>
         {
@@ -28,7 +28,7 @@ internal class PipelineCommandClass
             Console.Out.WriteLine($"Getting pipeline information for [{pipeline.Id}] {pipeline.Name}...");
             var buildDefinition = adf.GetBuildDefinition(pipeline.Id);
 
-            fileLines.Add($"|[{buildDefinition.Name}]({buildDefinition.Links.Web.Href})|[![Build Status]({buildDefinition.Links.Badge.Href})]({buildDefinition.Links.Badge.Href})|--|");
+            fileLines.Add($"|[{buildDefinition.Name}]({buildDefinition.Links.Web.HRef})|[![Build Status]({buildDefinition.Links.Badge.HRef})]({buildDefinition.Links.Badge.HRef})|--|");
         }
         Console.Out.WriteLine($"Writing output to {outFileName}...");
         File.WriteAllLines(outFileName, fileLines);

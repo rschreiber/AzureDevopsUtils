@@ -14,5 +14,5 @@ public class Reviewer
     public string UniqueName { get; set; }
     public string ImageUrl { get; set; }
     public bool IsContainer { get; set; }
-    public Votedfor[] VotedFor { get; set; }
+    public VotedFor[] VotedFor { get; set; }
 }

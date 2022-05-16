@@ -1,6 +1,6 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Authoredby
+public class AuthoredBy
 {
     public string DisplayName { get; set; }
     public string Url { get; set; }

@@ -2,11 +2,6 @@
 
 namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public partial class PipelineLink
-{
-    public string href { get; set; }
-}
-
 public class Pipeline
 {
     [JsonPropertyName("_links")] public Links Links { get; set; }

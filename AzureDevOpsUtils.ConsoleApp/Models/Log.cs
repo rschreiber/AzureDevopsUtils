@@ -1,7 +1,8 @@
 ﻿namespace AzureDevOpsUtils.ConsoleApp.Models;
 
-public class Lastmergetargetcommit
+public class Log
 {
-    public string CommitId { get; set; }
+    public int Id { get; set; }
+    public string Type { get; set; }
     public string Url { get; set; }
 }
